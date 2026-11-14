@@ -1,0 +1,33 @@
+# 키·모델·네트워크 없이 mock 모드(동봉 합성 샘플)로 전체 흐름을 검증한다(Node.js·TypeScript·React).
+name: ci
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "17 3 * * 1"   # 매주 월요일 — 의존성·런타임이 바뀌어 깨지지 않았는지 정기 확인
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ["22.x", "24.x"]   # engines: >=22.22 (jsdom 31 기준)
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+        env:
+          DEMO_MODE: mock
+      - run: npm run build
+      # 데이터 반출 차단: 빌드한 index.html 에 CSP connect-src 'self' 가 있어야 한다
+      - run: grep -c "connect-src 'self'" dist/index.html
+      - run: node bin/trace-codebook.mjs --help --lang ko
