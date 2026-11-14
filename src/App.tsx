@@ -46,25 +46,26 @@ export default function App() {
   // 저장해 둔 주석을 다 불러온 뒤에만 자동 저장한다(빈 상태로 덮어쓰지 않게)
   const readyRef = useRef(false);
 
-  const getStore = useCallback(async (): Promise<ProjectStore | null> => {
-    if (storeRef.current) return storeRef.current;
-    try {
-      storeRef.current = await openProjectStore();
-      return storeRef.current;
-    } catch (e) {
-      setSaveError(t('save.failed', { message: (e as Error).message }));
-      return null;
+  // 열기 약속을 한 번만 만든다 — 동시에 두 곳이 부르면 연결이 둘 열려 쓰기 순서가 꼬일 수 있다
+  const storePromise = useRef<Promise<ProjectStore | null> | null>(null);
+  const getStore = useCallback((): Promise<ProjectStore | null> => {
+    if (!storePromise.current) {
+      storePromise.current = openProjectStore()
+        .then((st) => {
+          storeRef.current = st;
+          return st;
+        })
+        .catch((e) => {
+          storePromise.current = null;
+          setSaveError(t('save.failed', { message: (e as Error).message }));
+          return null;
+        });
     }
+    return storePromise.current;
   }, [t]);
+  // 진행 중인 저장(끝나기 전에 연결을 닫지 않으려고)
+  const inflight = useRef<Promise<unknown>>(Promise.resolve());
 
-  // 화면을 닫을 때 DB 연결을 닫는다
-  useEffect(
-    () => () => {
-      storeRef.current?.close();
-      storeRef.current = null;
-    },
-    [],
-  );
 
   /** 파일(또는 샘플) 하나를 연다: 스트림 파싱 → 형식 판정 → 지문 → 저장된 주석 불러오기 */
   const openBlob = useCallback(
@@ -118,17 +119,22 @@ export default function App() {
   }, []);
 
   // 자동 저장: 바뀐 뒤 0.3초 조용하면 IndexedDB 에 쓴다
+  const pendingRef = useRef(false); // 예약됐지만 아직 시작 안 된 저장이 있는가
   const latest = useRef<{ file: LoadedFile | null; state: ProjectState }>({ file, state });
   useLayoutEffect(() => {
     latest.current = { file, state };
   });
   useEffect(() => {
     if (!file || !readyRef.current) return;
+    pendingRef.current = true;
     const timer = setTimeout(async () => {
+      pendingRef.current = false;
       const store = await getStore();
       if (!store) return;
       try {
-        await store.save(file.fingerprint, file.name, state);
+        const run = store.save(file.fingerprint, file.name, state);
+        inflight.current = run.catch(() => {});
+        await run;
         setSaveError(null);
       } catch (e) {
         setSaveError(t('save.failed', { message: (e as Error).message }));
@@ -141,11 +147,31 @@ export default function App() {
   useEffect(() => {
     const flush = () => {
       const { file: f, state: s } = latest.current;
-      if (f && readyRef.current && storeRef.current) void storeRef.current.save(f.fingerprint, f.name, s).catch(() => {});
+      const st = storeRef.current;
+      if (f && readyRef.current && st) inflight.current = st.save(f.fingerprint, f.name, s).catch(() => {});
     };
     window.addEventListener('pagehide', flush);
-    return () => window.removeEventListener('pagehide', flush);
+    return () => {
+      window.removeEventListener('pagehide', flush);
+      // 화면이 닫힐 때 기다리던 저장이 있으면 버리지 않고 시작한다
+      if (pendingRef.current) {
+        pendingRef.current = false;
+        flush();
+      }
+    };
   }, []);
+
+  // 화면을 닫을 때 DB 연결을 닫는다
+  useEffect(
+    () => () => {
+      const pending = storePromise.current;
+      storePromise.current = null;
+      storeRef.current = null;
+      // 저장이 끝난 뒤에 닫는다
+      void inflight.current.then(() => pending).then((st) => st?.close());
+    },
+    [],
+  );
 
   const traceSources = useMemo(() => new Map(file?.traces.map((tr) => [tr.id, tr.source]) ?? []), [file]);
 
