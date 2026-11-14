@@ -1,0 +1,46 @@
+{
+  "id": "lf-7c1e2a",
+  "name": "support-chat",
+  "timestamp": "2026-11-14T10:00:00.000Z",
+  "input": {
+    "question": "Can I exchange my fleece?"
+  },
+  "output": "Size and color exchanges are free within 30 days of delivery.",
+  "observations": [
+    {
+      "id": "obs-1",
+      "traceId": "lf-7c1e2a",
+      "type": "SPAN",
+      "name": "retrieve-policy",
+      "startTime": "2026-11-14T10:00:00.100Z",
+      "input": "exchange",
+      "output": [
+        "Exchange policy: size and color exchanges are free within 30 days of delivery."
+      ]
+    },
+    {
+      "id": "obs-2",
+      "traceId": "lf-7c1e2a",
+      "type": "GENERATION",
+      "name": "answer",
+      "parentObservationId": "obs-1",
+      "startTime": "2026-11-14T10:00:00.400Z",
+      "model": "gpt-4o-mini",
+      "input": [
+        {
+          "role": "system",
+          "content": "You are Pip, the customer support assistant for Brightpath Gear, an outdoor equipment store. Always check the policy with search_policy before answering policy questions. Use tools for order actions. Respect customer preferences. Follow the escalation policy.\n\nExchange policy: size and color exchanges are free within 30 days of delivery."
+        },
+        {
+          "role": "user",
+          "content": "Can I exchange my fleece?"
+        }
+      ],
+      "output": {
+        "role": "assistant",
+        "content": "Size and color exchanges are free within 30 days of delivery."
+      }
+    }
+  ],
+  "scores": []
+}

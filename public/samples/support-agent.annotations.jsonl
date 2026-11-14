@@ -1,0 +1,40 @@
+{"trace_id":"sup-001","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":1,"reviewed_at":"2026-11-14T09:01:35.000Z"}
+{"trace_id":"sup-002","source":"openai-jsonl","verdict":"fail","note":"Says 30-day refund window; the retrieved policy says 14 days.","failure_mode":"Policy hallucination","review_order":2,"reviewed_at":"2026-11-14T09:03:10.000Z"}
+{"trace_id":"sup-003","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":3,"reviewed_at":"2026-11-14T09:04:45.000Z"}
+{"trace_id":"sup-004","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":4,"reviewed_at":"2026-11-14T09:06:20.000Z"}
+{"trace_id":"sup-005","source":"openai-jsonl","verdict":"fail","note":"Customer said BP-48213; lookup_order called with BP-48231 (digits swapped).","failure_mode":"Wrong tool arguments","review_order":5,"reviewed_at":"2026-11-14T09:07:55.000Z"}
+{"trace_id":"sup-006","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":6,"reviewed_at":"2026-11-14T09:09:30.000Z"}
+{"trace_id":"sup-007","source":"openai-jsonl","verdict":"fail","note":"Claims free shipping over $50; policy says over $75.","failure_mode":"Policy hallucination","review_order":7,"reviewed_at":"2026-11-14T09:11:05.000Z"}
+{"trace_id":"sup-008","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":8,"reviewed_at":"2026-11-14T09:12:40.000Z"}
+{"trace_id":"sup-009","source":"openai-jsonl","verdict":"fail","note":"Customer asked for email only; agent scheduled a phone callback.","failure_mode":"Ignored user constraint","review_order":9,"reviewed_at":"2026-11-14T09:14:15.000Z"}
+{"trace_id":"sup-010","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":10,"reviewed_at":"2026-11-14T09:15:50.000Z"}
+{"trace_id":"sup-011","source":"openai-jsonl","verdict":"fail","note":"Return reason sent as \"damaged\" but customer said wrong size.","failure_mode":"Wrong tool arguments","review_order":11,"reviewed_at":"2026-11-14T09:17:25.000Z"}
+{"trace_id":"sup-012","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":12,"reviewed_at":"2026-11-14T09:19:00.000Z"}
+{"trace_id":"sup-013","source":"openai-jsonl","verdict":"fail","note":"Asked twice for a person; never escalated.","failure_mode":"Missing human handoff","review_order":13,"reviewed_at":"2026-11-14T09:20:35.000Z"}
+{"trace_id":"sup-014","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":14,"reviewed_at":"2026-11-14T09:22:10.000Z"}
+{"trace_id":"sup-015","source":"openai-jsonl","verdict":"fail","note":"Promises a 2-year warranty; policy says 1 year.","failure_mode":"Policy hallucination","review_order":15,"reviewed_at":"2026-11-14T09:23:45.000Z"}
+{"trace_id":"sup-016","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":16,"reviewed_at":"2026-11-14T09:25:20.000Z"}
+{"trace_id":"sup-017","source":"openai-jsonl","verdict":"fail","note":"Needs delivery by Friday; agent recommends standard shipping that arrives next week.","failure_mode":"Ignored user constraint","review_order":17,"reviewed_at":"2026-11-14T09:26:55.000Z"}
+{"trace_id":"sup-018","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":18,"reviewed_at":"2026-11-14T09:28:30.000Z"}
+{"trace_id":"sup-019","source":"openai-jsonl","verdict":"fail","note":"create_return timed out but agent says the return is created.","failure_mode":"Tool error reported as success","review_order":19,"reviewed_at":"2026-11-14T09:30:05.000Z"}
+{"trace_id":"sup-020","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":20,"reviewed_at":"2026-11-14T09:31:40.000Z"}
+{"trace_id":"sup-021","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":21,"reviewed_at":"2026-11-14T09:33:15.000Z"}
+{"trace_id":"sup-022","source":"openai-jsonl","verdict":"fail","note":"Passed the email address as order_id to lookup_order.","failure_mode":"Wrong tool arguments","review_order":22,"reviewed_at":"2026-11-14T09:34:50.000Z"}
+{"trace_id":"sup-023","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":23,"reviewed_at":"2026-11-14T09:36:25.000Z"}
+{"trace_id":"sup-024","source":"openai-jsonl","verdict":"fail","note":"Says refund arrives within 24 hours; policy says 5-7 business days.","failure_mode":"Policy hallucination","review_order":24,"reviewed_at":"2026-11-14T09:38:00.000Z"}
+{"trace_id":"sup-025","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":25,"reviewed_at":"2026-11-14T09:39:35.000Z"}
+{"trace_id":"sup-026","source":"openai-jsonl","verdict":"fail","note":"Customer threatens legal action; no escalation per policy.","failure_mode":"Missing human handoff","review_order":26,"reviewed_at":"2026-11-14T09:41:10.000Z"}
+{"trace_id":"sup-027","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":27,"reviewed_at":"2026-11-14T09:42:45.000Z"}
+{"trace_id":"sup-028","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":28,"reviewed_at":"2026-11-14T09:44:20.000Z"}
+{"trace_id":"sup-029","source":"openai-jsonl","verdict":"fail","note":"Asked to cancel only the tent; agent cancelled the whole order.","failure_mode":"Ignored user constraint","review_order":29,"reviewed_at":"2026-11-14T09:45:55.000Z"}
+{"trace_id":"sup-030","source":"openai-jsonl","verdict":"defer","note":"Policy text does not cover rentals; unclear if the answer is right.","failure_mode":null,"review_order":30,"reviewed_at":"2026-11-14T09:47:30.000Z"}
+{"trace_id":"sup-031","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":31,"reviewed_at":"2026-11-14T09:49:05.000Z"}
+{"trace_id":"sup-032","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":32,"reviewed_at":"2026-11-14T09:50:40.000Z"}
+{"trace_id":"sup-033","source":"openai-jsonl","verdict":"fail","note":"Mentions a $10 exchange fee; policy says exchanges are free.","failure_mode":"Policy hallucination","review_order":33,"reviewed_at":"2026-11-14T09:52:15.000Z"}
+{"trace_id":"sup-034","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":34,"reviewed_at":"2026-11-14T09:53:50.000Z"}
+{"trace_id":"sup-035","source":"openai-jsonl","verdict":"fail","note":"cancel_order failed (already shipped) but agent confirms cancellation.","failure_mode":"Tool error reported as success","review_order":35,"reviewed_at":"2026-11-14T09:55:25.000Z"}
+{"trace_id":"sup-036","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":36,"reviewed_at":"2026-11-14T09:57:00.000Z"}
+{"trace_id":"sup-037","source":"openai-jsonl","verdict":"fail","note":"Cancelled the previous order BP-48501 instead of BP-48510 the customer named.","failure_mode":"Wrong tool arguments","review_order":37,"reviewed_at":"2026-11-14T09:58:35.000Z"}
+{"trace_id":"sup-038","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":38,"reviewed_at":"2026-11-14T10:00:10.000Z"}
+{"trace_id":"sup-039","source":"openai-jsonl","verdict":"defer","note":"Customer left mid-conversation; not enough to judge.","failure_mode":null,"review_order":39,"reviewed_at":"2026-11-14T10:01:45.000Z"}
+{"trace_id":"sup-040","source":"openai-jsonl","verdict":"pass","note":"","failure_mode":null,"review_order":40,"reviewed_at":"2026-11-14T10:03:20.000Z"}

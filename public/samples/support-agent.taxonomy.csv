@@ -1,0 +1,6 @@
+failure_mode,definition,count,share_of_failures,example_trace_ids
+Policy hallucination,"The answer states a policy (window, fee, threshold, duration) that contradicts the policy text the agent just retrieved.",5,0.3125,sup-002;sup-007;sup-015
+Wrong tool arguments,"A tool is called with an argument that does not match what the customer said (wrong order id, wrong item, wrong reason).",4,0.2500,sup-005;sup-011;sup-022
+Ignored user constraint,"The agent acts against an explicit customer preference or limit (contact channel, deadline, partial action).",3,0.1875,sup-009;sup-017;sup-029
+Missing human handoff,"The escalation policy requires a human (asked for a person, chargeback, legal threat) but the agent keeps going alone.",2,0.1250,sup-013;sup-026
+Tool error reported as success,A tool returned an error or failure status but the agent told the customer the action succeeded.,2,0.1250,sup-019;sup-035

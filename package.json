@@ -1,0 +1,64 @@
+{
+  "name": "trace-codebook",
+  "version": "0.1.0",
+  "description": "Read LLM traces in your browser, write open-coding notes, group them into failure modes, and count them — no server, no account, no API key.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "trace-codebook": "bin/trace-codebook.mjs"
+  },
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "engines": {
+    "node": ">=22.22"
+  },
+  "keywords": [
+    "llm",
+    "evals",
+    "error-analysis",
+    "open-coding",
+    "axial-coding",
+    "traces",
+    "opentelemetry",
+    "openinference",
+    "langfuse",
+    "phoenix"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.test.json",
+    "lint": "oxlint",
+    "samples": "node scripts/make-samples.mjs",
+    "shots": "node scripts/shots.mjs",
+    "check:docs": "node scripts/check-docs.mjs",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/react": "16.3.3",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.3.0",
+    "fake-indexeddb": "6.2.8",
+    "idb": "8.0.4",
+    "jsdom": "31.0.1",
+    "oxlint": "1.90.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "typescript": "7.0.2",
+    "vite": "8.3.8",
+    "vitest": "5.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeeGyeongPil/trace-codebook.git"
+  },
+  "homepage": "https://github.com/LeeGyeongPil/trace-codebook#readme"
+}
