@@ -1,0 +1,3 @@
+{"messages":[{"role":"user","content":"Where is my order?"},{"role":"assistant","content":"It shipped."}]}
+{"messages":[{"role":"user","content":"Refund window?"},{"role":"assistant","content":"14 days."}]}
+{"messages":[{"role":"user","content":"Warranty?"},{"role":"assistant","content":"1 year."}]}

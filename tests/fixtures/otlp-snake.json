@@ -1,0 +1,122 @@
+{
+  "resource_spans": [
+    {
+      "scope_spans": [
+        {
+          "spans": [
+            {
+              "trace_id": "cccc",
+              "span_id": "c1",
+              "start_time_unix_nano": "10",
+              "attributes": [
+                { "key": "gen_ai.operation.name", "value": { "string_value": "chat" } },
+                {
+                  "key": "gen_ai.input.messages",
+                  "value": {
+                    "array_value": {
+                      "values": [
+                        {
+                          "kvlist_value": {
+                            "values": [
+                              { "key": "role", "value": { "string_value": "user" } },
+                              {
+                                "key": "parts",
+                                "value": {
+                                  "array_value": {
+                                    "values": [
+                                      {
+                                        "kvlist_value": {
+                                          "values": [
+                                            { "key": "type", "value": { "string_value": "text" } },
+                                            { "key": "content", "value": { "string_value": "Track BP-1?" } }
+                                          ]
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kvlist_value": {
+                            "values": [
+                              { "key": "role", "value": { "string_value": "assistant" } },
+                              {
+                                "key": "parts",
+                                "value": {
+                                  "array_value": {
+                                    "values": [
+                                      {
+                                        "kvlist_value": {
+                                          "values": [
+                                            { "key": "type", "value": { "string_value": "tool_call" } },
+                                            { "key": "id", "value": { "string_value": "t1" } },
+                                            { "key": "name", "value": { "string_value": "lookup_order" } },
+                                            {
+                                              "key": "arguments",
+                                              "value": { "kvlist_value": { "values": [{ "key": "order_id", "value": { "string_value": "BP-1" } }] } }
+                                            }
+                                          ]
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kvlist_value": {
+                            "values": [
+                              { "key": "role", "value": { "string_value": "tool" } },
+                              {
+                                "key": "parts",
+                                "value": {
+                                  "array_value": {
+                                    "values": [
+                                      {
+                                        "kvlist_value": {
+                                          "values": [
+                                            { "key": "type", "value": { "string_value": "tool_call_response" } },
+                                            { "key": "id", "value": { "string_value": "t1" } },
+                                            { "key": "response", "value": { "string_value": "shipped" } }
+                                          ]
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "key": "gen_ai.output.messages",
+                  "value": {
+                    "string_value": "[{\"role\":\"assistant\",\"parts\":[{\"type\":\"text\",\"content\":\"It has shipped.\"}],\"finish_reason\":\"stop\"}]"
+                  }
+                }
+              ]
+            },
+            {
+              "trace_id": "dddd",
+              "span_id": "d1",
+              "start_time_unix_nano": "20",
+              "attributes": [
+                { "key": "gen_ai.operation.name", "value": { "string_value": "chat" } },
+                { "key": "gen_ai.request.model", "value": { "string_value": "some-model" } }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

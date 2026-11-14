@@ -1,0 +1,4 @@
+{"id":"lf-1","name":"support","input":{"q":"refund?"},"output":"ok","observations":[
+{"id":"o1","traceId":"lf-1","type":"SPAN","name":"retrieve","startTime":"2026-11-14T00:00:00.000Z","input":"refund?","output":["doc1"]},
+{"id":"o2","traceId":"lf-1","type":"GENERATION","name":"answer","parentObservationId":"o1","startTime":"2026-11-14T00:00:01.000Z","input":[{"role":"system","content":"Use docs."},{"role":"user","content":"refund?"}],"output":{"role":"assistant","content":"Refunds take 30 days."}}
+],"scores":[]}

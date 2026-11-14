@@ -1,0 +1,2 @@
+{"id":"t1","messages":[{"role":"system","content":"You are a travel bot."},{"role":"user","content":"Weather in Paris?"},{"role":"assistant","content":null,"tool_calls":[{"id":"call_1","type":"function","function":{"name":"get_weather","arguments":"{\"city\":\"Paris\"}"}}]},{"role":"tool","tool_call_id":"call_1","content":"rainy, 57F"},{"role":"assistant","content":"It is sunny in Paris."}]}
+{"id":"t2","messages":[{"role":"user","content":[{"type":"text","text":"Hi"}]},{"role":"assistant","content":"Hello!"}]}
