@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1 - 2026-11-14
+
+- Fixed: pending autosave is flushed when the screen closes, concurrent saves share one IndexedDB connection, and the connection closes only after in-flight saves finish.
+
 ## 0.1.0 - 2026-11-14
 
 First release.
@@ -15,5 +19,5 @@ First release.
 ### Known issues
 
 - If the trace file is moved or deleted while the CLI server is running, the next request for it can end the server process.
-- With an unknown option placed before `--lang`, the error message is printed in English even when another language was requested.
+- An unknown-option error is always printed in English, regardless of `--lang` or `LANG`.
 - When every line of a file is broken JSON, the screen shows only "No records found" without the broken line numbers; the unknown-format error does not list the five supported formats on screen (see the README for the list).
