@@ -6,6 +6,7 @@ import { IDBFactory } from 'fake-indexeddb';
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import App from '../src/App';
+import { openProjectStore } from '../src/storage/db';
 import { LangProvider } from '../src/i18n';
 import { sample } from './helpers';
 
@@ -41,6 +42,8 @@ const renderApp = () =>
 async function openSample() {
   await act(async () => void fireEvent.click(screen.getByRole('button', { name: 'Try sample traces' })));
   await screen.findByTestId('format');
+  // 화면이 그려진 직후에도 키 처리기를 다는 effect 는 아직 대기 중일 수 있다 → 비워서 처리기가 달린 뒤에 키를 누른다
+  await act(async () => {});
 }
 
 const press = (key: string, target: Window | Element = window) => act(() => void fireEvent.keyDown(target, { key }));
@@ -66,8 +69,19 @@ describe('app flow (mock mode with bundled sample)', () => {
     press('Escape', note);
     press('j');
     press('p');
-    // 0.3초 뒤 자동 저장 → 화면을 닫고(언마운트) 다시 연다
-    await new Promise((r) => setTimeout(r, 700));
+    // 자동 저장이 끝날 때까지 조건으로 기다린 뒤(고정 sleep 없음) 화면을 닫고(언마운트) 다시 연다
+    await waitFor(async () => {
+      const db = await openProjectStore();
+      try {
+        const rows = await db.list();
+        expect(rows).toHaveLength(1);
+        const anns = Object.values(rows[0].state.annotations);
+        expect(anns.map((a) => a.verdict).sort()).toEqual(['fail', 'pass']);
+        expect(anns.find((a) => a.verdict === 'fail')?.note).toBe('Answered without checking the order');
+      } finally {
+        db.close();
+      }
+    }, { timeout: 5000 });
     cleanup();
 
     renderApp();

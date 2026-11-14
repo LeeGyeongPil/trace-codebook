@@ -42,7 +42,7 @@ describe('cli help and language', () => {
     expect(firstLine(run(['--help'], { LC_MESSAGES: 'ko_KR.UTF-8' }).stdout)).toMatch(/^사용법/);
     expect(firstLine(run(['--help'], { LANG: 'ja_JP.UTF-8' }).stdout)).toMatch(/^Usage/);
     expect(firstLine(run(['--help']).stdout)).toMatch(/^Usage/);
-  });
+  }, 90000); // 프로세스를 7번 띄우므로 CPU 가 몹시 바쁠 때를 위해 넉넉히
 
   it('--lang wins over the environment', () => {
     expect(firstLine(run(['--help', '--lang=en'], { TRACE_CODEBOOK_LANG: 'ko' }).stdout)).toMatch(/^Usage/);
