@@ -27,7 +27,7 @@ The counts tell you which problem to fix or to automate first. trace-codebook pu
 Requires Node.js 22.22 or newer ([download](https://nodejs.org/) or `brew install node`). On a minimal Linux image you also need `git` only if you build from source; there are no other system packages.
 
 ```bash
-# Run without installing (once the package is published to npm)
+# Run without installing
 npx trace-codebook
 
 # Or build from source
@@ -43,8 +43,10 @@ The published package has zero runtime dependencies: React and the other librari
 ## Quick start
 
 ```bash
-node bin/trace-codebook.mjs --no-open --port 4178
+npx trace-codebook --no-open --port 4178
 ```
+
+If you built from source, use `node bin/trace-codebook.mjs --no-open --port 4178` instead.
 
 ![Terminal output of the start command](docs/images/serve.en.png)
 *The server prints its address. Open it in a browser (without `--no-open` it opens for you). The picture was taken with the `npx` form plus `--lang en` (and a different port), so its address ends in `?lang=en`; the command above prints the address without that suffix when your system language is not Korean.*
@@ -59,7 +61,7 @@ The sample is **synthetic practice data** written for this project, not real use
 To open your own file directly:
 
 ```bash
-npx trace-codebook traces.jsonl             # from npm, once published
+npx trace-codebook traces.jsonl             # from npm
 node bin/trace-codebook.mjs traces.jsonl    # from a source build
 ```
 

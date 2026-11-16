@@ -27,7 +27,7 @@ LLM 앱의 실제 트레이스를 브라우저에서 읽고, 잘못된 점을 �
 Node.js 22.22 이상이 필요합니다([내려받기](https://nodejs.org/) 또는 `brew install node`). 최소 리눅스 환경에서는 소스에서 빌드할 때만 `git` 이 추가로 필요하고, 다른 시스템 패키지는 없습니다.
 
 ```bash
-# 설치 없이 실행 (npm 에 게시된 뒤)
+# 설치 없이 실행
 npx trace-codebook
 
 # 또는 소스에서 빌드
@@ -43,8 +43,10 @@ node bin/trace-codebook.mjs
 ## 빠르게 시작하기
 
 ```bash
-node bin/trace-codebook.mjs --no-open --port 4178
+npx trace-codebook --no-open --port 4178
 ```
+
+소스로 빌드했다면 `node bin/trace-codebook.mjs --no-open --port 4178` 를 쓰세요.
 
 ![시작 명령의 터미널 출력](docs/images/serve.ko.png)
 *서버가 주소를 출력합니다. 브라우저로 여세요(`--no-open` 을 빼면 자동으로 열립니다). 이 그림은 `npx` 형태에 `--lang ko` 를 붙이고(포트도 다르게) 찍어서 주소 끝에 `?lang=ko` 가 있습니다. 위 명령은 시스템 언어가 한국어가 아니면 이 접미사 없이 주소를 출력합니다.*
@@ -59,7 +61,7 @@ node bin/trace-codebook.mjs --no-open --port 4178
 내 파일을 바로 열려면:
 
 ```bash
-npx trace-codebook traces.jsonl             # npm 에서, 게시된 뒤
+npx trace-codebook traces.jsonl             # npm 에서
 node bin/trace-codebook.mjs traces.jsonl    # 소스 빌드에서
 ```
 
