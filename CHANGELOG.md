@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2 - 2026-11-16
+
+- Docs: the README now presents `npx trace-codebook` as the default way to run the app and no longer says the package is unpublished.
+
 ## 0.1.1 - 2026-11-14
 
 - Fixed: pending autosave is flushed when the screen closes, concurrent saves share one IndexedDB connection, and the connection closes only after in-flight saves finish.
