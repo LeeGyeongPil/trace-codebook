@@ -196,7 +196,7 @@ flowchart LR
 
 ```bash
 npm install
-npm test          # 73 tests in 10 files, no network
+npm test          # 74 tests in 10 files, no network
 npm run lint
 npm run typecheck
 npm run build

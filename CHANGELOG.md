@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3 - 2026-11-26
+
+- Fixed: if the trace file is moved or deleted while the CLI server is running, the request for it now returns 404 and the server keeps running (read errors are handled too).
+
 ## 0.1.2 - 2026-11-16
 
 - Docs: the README now presents `npx trace-codebook` as the default way to run the app and no longer says the package is unpublished.
@@ -22,6 +26,5 @@ First release.
 
 ### Known issues
 
-- If the trace file is moved or deleted while the CLI server is running, the next request for it can end the server process.
 - An unknown-option error is always printed in English, regardless of `--lang` or `LANG`.
 - When every line of a file is broken JSON, the screen shows only "No records found" without the broken line numbers; the unknown-format error does not list the five supported formats on screen (see the README for the list).
