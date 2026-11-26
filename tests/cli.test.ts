@@ -62,6 +62,17 @@ describe('cli help and language', () => {
     expect(b.status).toBe(2);
     expect(b.stderr).toMatch(/잘못된 포트/);
     expect(run(['--bogus']).status).toBe(2);
+    const ko = /알 수 없는 옵션: --bogus\. --help 를 보세요\./;
+    const c = run(['--bogus'], { LANG: 'ko_KR.UTF-8' });
+    expect(c.status).toBe(2);
+    expect(c.stderr).toMatch(ko);
+    const d = run(['--bogus'], { TRACE_CODEBOOK_LANG: 'ko' });
+    expect(d.status).toBe(2);
+    expect(d.stderr).toMatch(ko);
+    const e = run(['--bogus', '--lang', 'ko']);
+    expect(e.status).toBe(2);
+    expect(e.stderr).toMatch(ko);
+    expect(run(['--lang', 'ko', '--bogus']).stderr).toMatch(ko);
   });
 
   it('missing file exits 1', () => {

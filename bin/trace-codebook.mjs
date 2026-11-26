@@ -31,6 +31,7 @@ const TYPES = {
 export function parseArgs(argv, env = process.env) {
   const opts = { file: null, port: DEFAULT_PORT, open: true, help: false, version: false, lang: null };
   const files = [];
+  let badOption = null;
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     const value = () => (a.includes('=') ? a.slice(a.indexOf('=') + 1) : argv[++i]);
@@ -39,7 +40,7 @@ export function parseArgs(argv, env = process.env) {
     else if (a === '--no-open') opts.open = false;
     else if (a === '--port' || a.startsWith('--port=')) opts.port = value();
     else if (a === '--lang' || a.startsWith('--lang=')) opts.lang = value();
-    else if (a.startsWith('-')) return { opts, error: ['badOption', { option: a }] };
+    else if (a.startsWith('-')) badOption ??= a; // 첫 번째만 기억하고 끝까지 훑는다
     else files.push(a);
   }
   // 언어부터 정해야 오류 메시지도 그 언어로 낼 수 있다
@@ -47,10 +48,12 @@ export function parseArgs(argv, env = process.env) {
     const l = String(opts.lang).toLowerCase();
     if (l !== 'en' && l !== 'ko') {
       opts.lang = langFromEnv(env);
+      if (badOption) return { opts, error: ['badOption', { option: badOption }] };
       return { opts, error: ['badLang', { lang: l }] };
     }
     opts.lang = l;
   } else opts.lang = langFromEnv(env);
+  if (badOption) return { opts, error: ['badOption', { option: badOption }] };
   if (files.length > 1) return { opts, error: ['tooMany', {}] };
   opts.file = files[0] ?? null;
   const port = Number(opts.port);
