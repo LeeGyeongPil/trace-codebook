@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4 - 2026-11-27
+
+- Fixed: the unknown-option error now honors `--lang` (in any position), `TRACE_CODEBOOK_LANG` and `LANG` instead of always printing English.
+
 ## 0.1.3 - 2026-11-26
 
 - Fixed: if the trace file is moved or deleted while the CLI server is running, the request for it now returns 404 and the server keeps running (read errors are handled too).
@@ -26,5 +30,4 @@ First release.
 
 ### Known issues
 
-- An unknown-option error is always printed in English, regardless of `--lang` or `LANG`.
 - When every line of a file is broken JSON, the screen shows only "No records found" without the broken line numbers; the unknown-format error does not list the five supported formats on screen (see the README for the list).

@@ -1,6 +1,6 @@
 {
   "name": "trace-codebook",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Read LLM traces in your browser, write open-coding notes, group them into failure modes, and count them — no server, no account, no API key.",
   "license": "MIT",
   "type": "module",
