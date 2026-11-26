@@ -91,9 +91,31 @@ export function makeServer({ root, file }) {
     // 1) 사용자가 준 트레이스 파일(읽기 전용)
     if (traceName && path === `/__trace/${traceName}`) {
       const type = TYPES[extname(traceName).toLowerCase()] ?? 'application/octet-stream';
-      res.writeHead(200, { ...headers, 'content-type': type, 'content-length': statSync(file).size });
-      if (req.method === 'HEAD') return res.end();
-      return createReadStream(file).pipe(res);
+      // 파일이 사라졌거나 일반 파일이 아니면 이 요청만 404 — 서버는 계속 돈다
+      let traceStat;
+      try {
+        traceStat = statSync(file);
+      } catch {
+        return notFound();
+      }
+      if (!traceStat.isFile()) return notFound();
+      const okHeaders = { ...headers, 'content-type': type, 'content-length': traceStat.size };
+      if (req.method === 'HEAD') {
+        res.writeHead(200, okHeaders);
+        return res.end();
+      }
+      const stream = createReadStream(file);
+      // stat 뒤 읽기 직전에 지워지는 경우 등: 헤더 전이면 404, 이미 보냈으면 연결만 끊는다
+      stream.on('error', () => {
+        if (!res.headersSent) notFound();
+        else res.destroy();
+      });
+      // 파일이 실제로 열린 뒤에만 200 헤더를 쓴다
+      stream.on('open', () => {
+        res.writeHead(200, okHeaders);
+        stream.pipe(res);
+      });
+      return;
     }
 
     // 2) dist/ 안의 정적 파일

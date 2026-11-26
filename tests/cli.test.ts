@@ -162,6 +162,44 @@ describe('cli server', () => {
     expect((await get(port, '/no-such-file.js')).status).toBe(404);
   });
 
+  it('a deleted trace file gives 404 and the server keeps running', async () => {
+    const copy = join(tmp, 'gone.jsonl');
+    writeFileSync(copy, content);
+    const own = spawn(process.execPath, [BIN, '--no-open', '--port', '0', '--lang', 'en', copy], {
+      env: cleanEnv(),
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+    try {
+      let out = '';
+      const p = await new Promise<number>((resolve, reject) => {
+        const timer = setTimeout(() => reject(new Error(`server did not start: ${out}`)), 20000);
+        own.stdout!.on('data', (c) => {
+          out += String(c);
+          const m = /http:\/\/127\.0\.0\.1:(\d+)\//.exec(out);
+          if (m && out.includes('Ctrl+C')) {
+            clearTimeout(timer);
+            resolve(Number(m[1]));
+          }
+        });
+        own.on('exit', (code) => reject(new Error(`exited early with ${code}`)));
+      });
+      expect((await get(p, '/__trace/gone.jsonl')).status).toBe(200);
+      rmSync(copy);
+      expect((await get(p, '/__trace/gone.jsonl')).status).toBe(404);
+      expect((await get(p, '/')).status).toBe(200);
+      expect(own.exitCode).toBeNull();
+      // 파일이 돌아오면 다시 200
+      writeFileSync(copy, content);
+      expect((await get(p, '/__trace/gone.jsonl')).body).toBe(content);
+    } finally {
+      if (own.exitCode == null) {
+        const exited = new Promise((r) => own.once('exit', r));
+        own.kill('SIGTERM');
+        await exited;
+      }
+    }
+  }, 60000);
+
   it('stops cleanly on SIGTERM', async () => {
     const exited = new Promise<number | null>((r) => child!.once('exit', (code) => r(code)));
     child!.kill('SIGTERM');
