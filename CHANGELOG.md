@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.5 - 2026-11-27
+
+- Fixed: opening a file where every line is broken JSON now shows the broken line numbers (first 20) in the error instead of only "No records found".
+
 ## 0.1.4 - 2026-11-27
 
 - Fixed: the unknown-option error now honors `--lang` (in any position), `TRACE_CODEBOOK_LANG` and `LANG` instead of always printing English.
@@ -30,4 +34,4 @@ First release.
 
 ### Known issues
 
-- When every line of a file is broken JSON, the screen shows only "No records found" without the broken line numbers; the unknown-format error does not list the five supported formats on screen (see the README for the list).
+- The unknown-format error does not list the five supported formats on screen (see the README for the list).
