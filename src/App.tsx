@@ -77,7 +77,12 @@ export default function App() {
       try {
         const { records, skipped } = await parseStream(blobChunks(blob));
         const { format, traces } = toTraces(records);
-        if (!format || traces.length === 0) throw new Error(t('error.empty'));
+        if (!format || traces.length === 0) {
+          // 모든 줄이 깨진 파일: 깨진 줄 번호(앞 20개)를 오류 문구에 함께 보여 준다
+          if (skipped.length === 0) throw new Error(t('error.empty'));
+          const lines = skipped.slice(0, 20).map((s) => s.line).join(', ');
+          throw new Error(t('error.emptyBroken', { n: skipped.length, lines }));
+        }
         const fp = await fingerprint(blob);
         const store = await getStore();
         const saved = store ? await store.load(fp).catch(() => undefined) : undefined;

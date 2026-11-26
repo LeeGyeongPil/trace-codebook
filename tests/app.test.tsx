@@ -136,4 +136,24 @@ describe('app flow (mock mode with bundled sample)', () => {
     await act(async () => void fireEvent.click(screen.getByRole('button', { name: 'Try sample traces' })));
     expect((await screen.findByRole('alert')).textContent).toMatch(/unknown trace format: keys=foo/);
   });
+
+  it('shows broken line numbers when every line of the file is broken', async () => {
+    renderApp();
+    const input = document.querySelector('input[type=file]') as HTMLInputElement;
+    const file = new File(['not json\n{oops\nalso bad\n'], 'broken.jsonl');
+    await act(async () => void fireEvent.change(input, { target: { files: [file] } }));
+    expect((await screen.findByRole('alert')).textContent).toContain('3 broken lines (1, 2, 3)');
+  });
+
+  it('shows the broken line numbers in Korean too', async () => {
+    render(
+      <LangProvider initial="ko">
+        <App />
+      </LangProvider>,
+    );
+    const input = document.querySelector('input[type=file]') as HTMLInputElement;
+    const file = new File(['not json\n{oops\nalso bad\n'], 'broken.jsonl');
+    await act(async () => void fireEvent.change(input, { target: { files: [file] } }));
+    expect((await screen.findByRole('alert')).textContent).toContain('깨진 줄 3개 (1, 2, 3)');
+  });
 });

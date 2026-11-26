@@ -19,6 +19,7 @@ export const ko: Record<MsgId, string> = {
   'drop.loading': '{name} 읽는 중…',
   'error.read': '이 파일을 읽지 못했습니다: {message}',
   'error.empty': '이 파일에서 레코드를 찾지 못했습니다.',
+  'error.emptyBroken': '레코드를 찾지 못했습니다: 깨진 줄 {n}개 ({lines})',
   'error.fetch': '{name} 을(를) 불러오지 못했습니다.',
 
   'summary.format': '형식',

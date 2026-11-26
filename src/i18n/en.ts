@@ -18,6 +18,7 @@ export const en = {
   'drop.loading': 'Reading {name}…',
   'error.read': 'Could not read this file: {message}',
   'error.empty': 'No records found in this file.',
+  'error.emptyBroken': 'No records found: {n} broken lines ({lines})',
   'error.fetch': 'Could not load {name}.',
 
   'summary.format': 'Format',
